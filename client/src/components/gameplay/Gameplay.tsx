@@ -71,12 +71,13 @@ export class Gameplay extends Component<IProps, IState> {
         const { localPlayer } = this.props.gameManager;
 
         return (
-            <div style={{backgroundColor: this.state.criticalSabotage ? 'red': 'white'}}>
-                <h1>Gameplay Screen</h1>
+            <div id={this.state.criticalSabotage ? "bgsab": "bg"}>
+                <h1 style={{ color: localPlayer.color }} >{localPlayer.name} </h1>
                 <PlayerList players={this.state.players} />
-                <p>Task completion: {this.state.taskBar * 100}%</p>
-                <TaskList tasks={this.state.tasks} />
-                <button onClick={this.handleRequestTask}>Scan Task</button>
+                <p id="text">Task completion:</p>
+                <progress id="text" value={this.state.taskBar} max='1' ></progress>
+                <TaskList  tasks={this.state.tasks} />
+                <button id="button" onClick={this.handleRequestTask}>Scan Task</button>
 
                 {/* Report button */}
                 {localPlayer.isAlive ? this.reportButton() : null}
@@ -92,12 +93,12 @@ export class Gameplay extends Component<IProps, IState> {
 
     reportButton() {
         return (
-            <Popup trigger={<button>Report Body</button>} modal>
+            <Popup trigger={<button id="button">Report Body</button>} modal>
                 {(close: () => void) => (
                     <div>
-                        <p>Are you sure you want to report a body? Only report if you can directly see the body.</p>
-                        <button onClick={() => { this.handleReportBody(); close() }}>Report</button>
-                        <button onClick={close}>Cancel</button>
+                        <p id="text">Are you sure you want to report a body? Only report if you can directly see the body.</p>
+                        <button id="button" onClick={() => { this.handleReportBody(); close() }}>Report</button>
+                        <button id="button" onClick={close}>Cancel</button>
                     </div>
                 )}
             </Popup>
@@ -120,7 +121,7 @@ export class Gameplay extends Component<IProps, IState> {
         }
 
         return (
-            <Popup trigger={<button>Sabotage</button>} modal>
+            <Popup trigger={<button id="button">Sabotage</button>} modal>
                 {(close: () => void) => (
                     <PopoutList entries={names} onSelected={value => { onSelect(value); close(); }}/>
                 )} 
@@ -134,12 +135,12 @@ export class Gameplay extends Component<IProps, IState> {
 
     killedButton() {
         return (
-            <Popup trigger={<button>I'm Dead</button>} modal>
+            <Popup trigger={<button id="button">I'm Dead</button>} modal>
             {(close: () => void) => (
                 <div>
                     <p>Are you sure you want to report yourself as dead?</p>
-                    <button onClick={() => { this.handleReportKilled(); close() }}>Yes</button>
-                    <button onClick={close}>No</button>
+                    <button id="button" onClick={() => { this.handleReportKilled(); close() }}>Yes</button>
+                    <button id="button" onClick={close}>No</button>
                 </div>
             )}
             </Popup>

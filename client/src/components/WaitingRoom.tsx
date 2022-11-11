@@ -53,7 +53,7 @@ export class PlayerList extends Component<IProps, IState> {
                     {listItems}
                 </ul>
                 <CirclePicker onChange={this.handleColorChange}/>
-                <button onClick={this.handleStartGame}>Start Game</button>
+                <button id="buttonstart" onClick={this.handleStartGame}>Start Game</button>
             </div>
         )
     }

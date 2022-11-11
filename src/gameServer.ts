@@ -76,7 +76,8 @@ export module gameServer {
                 name: player.name,
                 color: player.color,
                 isImposter: imposters.includes(player.name),
-                isAlive: true
+                isAlive: true,
+                isHost: false
             }        
         }
 
@@ -126,6 +127,7 @@ export module gameServer {
      * @param connectionInfo Player's connection info.
      * @return New player object.
      */
+    
     export function connectPlayer(client: SocketIO.Socket, connectionInfo: IPlayerConnectionInfo): Player | null {
         let name = connectionInfo.name;
         if (name in players || name in constants.bannedNames) {
@@ -139,6 +141,17 @@ export module gameServer {
         waitingRoom.updateRoster();
         return player;
     }
+
+    export function disconnectPlayer(client: SocketIO.Socket, connectionInfo: IPlayerConnectionInfo): Player | null {
+        let name = connectionInfo.name;
+        let player: Player = new Player(name, client);
+        delete players.Player;
+        console.log(`Player disconnected: ${name}`);
+
+        waitingRoom.updateRoster();
+        return null;
+    }
+
 
     /**
      * Connect a game field computer.

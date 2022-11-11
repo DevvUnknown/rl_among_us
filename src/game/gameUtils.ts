@@ -71,7 +71,8 @@ export module gameUtils {
             name: player.name,
             color: player.color,
             isImposter: player.isImposter,
-            isAlive: player.isAlive
+            isAlive: player.isAlive,
+            isHost: player.isHost
         };
     }
 

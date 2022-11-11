@@ -32,24 +32,27 @@ class LoginScreen extends Component<IProps, IConnectionInfo> {
     }
 
     private handleSubmit = (event: React.SyntheticEvent) => {
+        console.log("Worked")
         this.props.onSubmit({ url: this.state.url, playerName: this.state.playerName });
         event.preventDefault();
     }
 
     render() {
+        console.log("Rendered")
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    URL
-                    <input type='text' value={this.state.url} onChange={this.handleURLChange} />
-                </label>
+            <form id="menu" onSubmit={this.handleSubmit}>
+                <div className="group" id="menuitems">
+                    <a className="text">URL: </a>
+                    <input id="input" type='text' value={this.state.url} onChange={this.handleURLChange} />
+                </div>
                 <br />
-                <label>
-                    Player Name:
-                    <input type='text' value={this.state.playerName} onChange={this.handlePlayerChange}></input>
-                </label>
+                <div className="group" id="menuitems">
+                    <a className="text">Player Name: </a>
+                    <input id="input" type='text' value={this.state.playerName} onChange={this.handlePlayerChange}></input>
+                    <button id="button" type='submit'>Submit</button>                    
+                </div>
                 <br />
-                <button type='submit'>Submit</button>
+                
             </form>
         )
     }

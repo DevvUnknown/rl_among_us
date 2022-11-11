@@ -27,7 +27,7 @@ export class PopoutList extends Component<IProps> {
 
     render() {
         return (
-            <div>
+            <div id="text">
                 {
                     this.props.entries.map((value) => {
                         return this.listEntry(value);

@@ -6,6 +6,9 @@ import ConnectionHandler, {IConnectionInfo} from './logic/ConnectionHandler'
 import WaitingRoom from './components/WaitingRoom';
 import GameScreen from './components/GameScreen';
 import { GameManager } from './logic/GameManager';
+import PlayerList from './components/testing/PlayerList';
+import { connect } from 'http2';
+import * as socketio from 'socket.io';import { type } from 'os';
 
 interface IProps {}
 interface IState {
@@ -48,6 +51,9 @@ class App extends Component<IProps, IState> {
             })
         })
     }
+
+
+
 
     handleEndGame = () => {
         this.setState({ isInGame: false });

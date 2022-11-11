@@ -18,7 +18,9 @@ export class Player {
     
     isImposter: boolean = false;
     isAlive: boolean = true;
-    color: string = '#000000'
+    
+    color: string = '#fff'
+    isHost: boolean = false;
 
     currentTask?: BaseTask;
     

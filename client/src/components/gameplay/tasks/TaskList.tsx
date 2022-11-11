@@ -13,8 +13,8 @@ const TaskList: React.FunctionComponent<IProps> = ({ tasks }: IProps) => {
 
     return (
         <div>
-            <h2>Tasks:</h2>
-            <ul>
+            <h2 id="text">Tasks:</h2>
+            <ul id="text">
                 {taskItems}
             </ul>
         </div>

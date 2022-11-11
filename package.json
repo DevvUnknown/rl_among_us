@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sam54123/rl_among_us.git"
+    "url": "git+https://github.com/DevvUnknown/rl_among_us.git"
   },
   "author": "TaterCraft",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/Sam54123/rl_among_us/issues"
+    "url": "https://github.com/DevvUnknown/rl_among_us/issues"
   },
-  "homepage": "https://github.com/Sam54123/rl_among_us#readme",
+  "homepage": "https://github.com/DevvUnknown/rl_among_us#readme",
   "dependencies": {
     "@types/socket.io": "^2.1.11",
     "config": "^3.3.2",
