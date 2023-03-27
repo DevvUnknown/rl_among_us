@@ -20,14 +20,16 @@ interface IState {
     taskID: string,
     scannerOpen: boolean,
     scannerMode: ScannerMode,
-    sabotageFixID: string
+    sabotageFixID: string,
+    Winstate: boolean
 };
 
 export enum GameState {
     GAMEPLAY,
     MEETING,
     TASK,
-    SABOTAGE_FIX
+    SABOTAGE_FIX,
+    ENDSCREEN
 }
 
 enum ScannerMode {
@@ -45,7 +47,8 @@ class GameScreen extends Component<IProps, IState> {
             taskID: '',
             scannerOpen: false,
             scannerMode: ScannerMode.SCAN_TASK,
-            sabotageFixID: ''
+            sabotageFixID: '',
+            Winstate: false
         }
     }
 
@@ -103,9 +106,12 @@ class GameScreen extends Component<IProps, IState> {
         this.setState({ gameState: GameState.GAMEPLAY });
     }
 
-    private handleGameEnd = (impostersWin: boolean) => {
+    private handleGameEnd = async (impostersWin: boolean) => {
         if (this.props.onGameFinished) {
-            this.props.onGameFinished(impostersWin);
+            this.setState({ Winstate: impostersWin })
+            this.setState({ gameState: GameState.ENDSCREEN })
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            this.props.onGameFinished(impostersWin); //sends the signal to end the game to the client
         }
     }
     
@@ -154,16 +160,32 @@ class GameScreen extends Component<IProps, IState> {
         return <Popup modal defaultOpen closeOnDocumentClick={false} closeOnEscape={false} contentStyle={{width: 'max-content'}}>{meetingWindow}</Popup>
     }
 
+    private EndScreen () {
+        if (this.state.Winstate) {
+          var screen="Imposters win!";  
+        }
+        else {
+          var screen="Crewmates win!";  
+        }
+        const endscreen = (
+        <div>
+            <h2>{screen}</h2>
+        </div>
+        )
+        return <Popup modal defaultOpen closeOnDocumentClick={false} closeOnEscape={false} contentStyle={{width: 'max-content'}}>{endscreen}</Popup>
+    }
+
     render() {
         const { gameState, taskID, scannerOpen } = this.state;
         const gameManager = this.props.gameManager;
         return (
-            <div>
+            <div id="popup">
                 <Gameplay gameManager={this.props.gameManager} onRequestTask={this.handleRequestTask} onReportBody={this.handleReportBody}/>
                 {/* Render tasks */}
                 {gameState === GameState.TASK ? this.getTaskWindow() : null}
                 {gameState === GameState.MEETING ? this.getMeetingWindow() : null}
                 {gameState === GameState.SABOTAGE_FIX ? this.getSabotageFixWindow() : null}
+                {gameState === GameState.ENDSCREEN ? this.EndScreen() : null}
                 {scannerOpen ? this.getScanWindow() : null}
             </div>
         )

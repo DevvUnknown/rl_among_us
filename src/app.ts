@@ -21,10 +21,10 @@ const io: SocketIO.Server = require('socket.io')(http);
  */
 
 io.on('connect', (socket: SocketIO.Socket) => {
-    
+  
     socket.on('disconnect', (socket: SocketIO.Socket) => {
         gameServer.disconnectPlayer(socket, connectionInfo as IPlayerConnectionInfo);
-        console.log('print')
+        gameServer.checkWin();
     })
 
     console.log('Client connecting...');

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { CirclePicker } from 'react-color';
 import ConnectionHandler from '../logic/ConnectionHandler';
+import { GameManager } from "../logic/GameManager";
 
-interface IProps {};
+
+interface IProps {
+};
 interface IState {
     playerList: ILightPlayer[]
     color: string
@@ -10,18 +13,24 @@ interface IState {
 
 interface ILightPlayer {
     name: string,
-    color: string
+    color: string,
+    isHost: boolean
 }
 
 export class PlayerList extends Component<IProps, IState> {
+
+    
+
+    
     constructor(props: IProps) {
         super(props)
-    
         this.state = {
             playerList: [],
             color: '#000'
         }
     }
+    
+
 
     componentDidMount() {
         ConnectionHandler.activeConnection.io.on('updateRoster', this.handleUpdateRoster);
@@ -42,21 +51,35 @@ export class PlayerList extends Component<IProps, IState> {
         ConnectionHandler.activeConnection.io.emit('startGame');
     }
 
+
+    
     render() {
-        const { playerList } = this.state;
-        const listItems = playerList.map(
-            (player) => <li key={player.name} style={{ color: player.color }}>{player.name}</li>
-        );
+
+        
+    let { playerList } = this.state;
+    let listItems = playerList.map(
+        (player) => <li key={player.name} style={{ color: player.color }}>{player.name}</li>
+    ); 
+    let button;
+
+
+    button = <button id="buttonstart" onClick={this.handleStartGame}>Start Game</button>;
+    if (playerList) {
         return (
             <div>
                 <ul>
-                    {listItems}
+                   {listItems} 
                 </ul>
-                <CirclePicker onChange={this.handleColorChange}/>
-                <button id="buttonstart" onClick={this.handleStartGame}>Start Game</button>
+                <CirclePicker
+                colors={["#C51211", "#132ED1", "#13802C", "#EC54BB", "#3E474E", "#71491D", "#39FEDD", "#4EEF38", "#F17D0C", "#6C2FBC", "#D6DFF1", "#F6F657"]}
+                onChange={this.handleColorChange}/>
+                {button}
             </div>
         )
     }
+
+
+}
 }
 
 export default PlayerList

@@ -1,9 +1,10 @@
-import { EventEmitter } from "events"
+import { EventEmitter } from "events";
 import ConnectionHandler from "./ConnectionHandler";
 import ILightPlayer from "../../../common/ILightPlayer";
 import { IMapFile, ITask } from "../../../common/IMapFile";
 import { MeetingManager } from "./MeetingManager";
 import { SabatogeManager } from "./sabotages/SabotageManager";
+import PlayerList from "../components/WaitingRoom";
 
 export enum GameState {
     Gameplay,
@@ -33,6 +34,7 @@ export class GameManager {
 
     taskBar = 0;
 
+
     constructor(connectionHandler: ConnectionHandler) {
         this.connectionHandler = connectionHandler;
         this.initializeSocket()
@@ -58,7 +60,6 @@ export class GameManager {
         }
         throw "Local player name as defined in connection is not present in player list. This is probably the server's fault."
     }
-
 
     getTask(taskID: string) {
         return this.mapInfo.tasks.find(task => task.id === taskID);

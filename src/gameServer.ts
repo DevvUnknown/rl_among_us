@@ -90,6 +90,9 @@ export module gameServer {
         // Initialize players and tell clients to start.
         for (let key in players) {
             let player = players[key];
+            if (player == null) {
+                delete players[key];
+            }
             let tasks = gameUtils.assignTasks(mapFile.tasks, 5);
             player.startGame(roster[player.name].isImposter, tasks);
             player.client.emit('startGame', args);
@@ -130,24 +133,27 @@ export module gameServer {
     
     export function connectPlayer(client: SocketIO.Socket, connectionInfo: IPlayerConnectionInfo): Player | null {
         let name = connectionInfo.name;
-        if (name in players || name in constants.bannedNames) {
-            app.disconnect(client, constants.disconnectReasons.NAME_EXISTS);
+        if (name in players || name in constants.bannedNames || !name.trim()) {
+            app.disconnect(client, constants.disconnectReasons.ILLEGAL_NAME);
             return null;
         }
         let player: Player = new Player(name, client);
+        if (players == null) {
+            player.isHost=true;
+        }
         players[name] = player;
         console.log(`Player connected: ${name}`);
-
         waitingRoom.updateRoster();
         return player;
     }
-
+    /**
+     Error occurs because this removes the player but then other functions can't function.
+     */
     export function disconnectPlayer(client: SocketIO.Socket, connectionInfo: IPlayerConnectionInfo): Player | null {
         let name = connectionInfo.name;
         let player: Player = new Player(name, client);
-        delete players.Player;
+        delete players[name];
         console.log(`Player disconnected: ${name}`);
-
         waitingRoom.updateRoster();
         return null;
     }
@@ -191,6 +197,9 @@ export module gameServer {
 
         if (oldValue != taskBar) {
             updateTaskBar();
+        }
+        if (taskBar===1) {
+            endGame(false);
         }
     }
 
@@ -274,19 +283,21 @@ export module gameServer {
      * Check to see if someone won.
      */
     export function checkWin() {
-        let numImposters = 0;
-        let numCrewmates = 0;
+        if (inGame) {
+            let numImposters = 0;
+            let numCrewmates = 0;
 
-        Object.values(players).forEach(player => {
-            if (player.isAlive) {
-                if (player.isImposter) { numImposters++ }
-                else { numCrewmates++ }
-            }
-        })
-        const winState = gameUtils.checkWinState(numImposters, numCrewmates);
+            Object.values(players).forEach(player => {
+                if (player.isAlive) {
+                    if (player.isImposter) { numImposters++ }
+                    else { numCrewmates++ }
+                }
+            })
+    const winState = gameUtils.checkWinState(numImposters, numCrewmates);
 
-        if (winState === gameUtils.WinState.IMPOSTERS) { endGame(true); }
-        else if (winState === gameUtils.WinState.CREWMATES) { endGame(false); }
+            if (winState === gameUtils.WinState.IMPOSTERS) { endGame(true); }
+            else if (winState === gameUtils.WinState.CREWMATES) { endGame(false); }
+        }
     }
     
     /**

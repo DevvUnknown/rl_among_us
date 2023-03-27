@@ -1,6 +1,12 @@
 body {
-    background-color: #424549;
+    background-color: rgb(20, 20, 20);
+    display: grid;
+    height: 100vh;
+    place-items: center;
     margin: 0px;
+    overflow: hidden;
+    padding: 0px;
+    
   }
 
 .CloseButton {
@@ -44,35 +50,58 @@ body {
 }
 
 #bg {
-    height: 100%;
-    width: 100%;
-    background: #424549;
-    position: absolute;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    display: contents;
+    height: 100vh;
+    background: rgb(20, 20, 20);
 }
 #bgsab {
-    height: 100%;
-    width: 100%;
-    background: #424549;
-    position: absolute;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    display: contents;
+    height: 100vh;
+    background: rgb(20, 20, 20);
     animation-name: color;
     animation-duration: 1s;
     animation-iteration-count: infinite;
 }
 @keyframes color {
     0% {
-      background-color: #424549;
+      background-color: rgb(20, 20, 20);
     }
     50% {
       background-color: #b25252;
     }
     100% {
-      background-color: #424549;
+      background-color: rgb(20, 20, 20);
     }
 }
 
 #header {
     text-align: center;
     font-size: clamp(5rem, 5vw, 5rem);
+}
+
+.popup {
+	margin: 75px auto;
+	padding: 20px;
+	background: #2e2e2e;
+	border: 1px solid #666;
+	width: 300px;
+	box-shadow: 0 0 50px rgba(0,0,0,0.5);
+	position: relative;
+}
+.popup_inner {
+    position: absolute;
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+    margin: auto;
+    background: rgb(0, 0, 0);
 }
 
 /* Waiting Screen */
@@ -94,9 +123,11 @@ body {
 /* Login Screen */
 
 #menu {
-    height: 100vh;
+    width: 1000px;
+    position: relative;
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .text {
@@ -110,26 +141,26 @@ body {
 }
 
 #input:focus, input:focus {
-    border-radius: 5px;
+    border-radius: 20px;
     color: white;
-    background:#282b30;
+    background:rgb(23, 23, 23);;
     font-size: clamp(1rem, 2vw, 2rem);
     margin: auto;
-    border-style: ridge;
-    border-color: #1e2124;
+    border-radius: 10px;
+    border-color: rgb(23, 23, 23);
 }
 #input, select, textarea{
     border-radius: 5px;
     color: white;
-    display: block;
-    background:#282b30;
+    display: flex;
+    background:rgb(23, 23, 23);;
     font-size: clamp(1rem, 2vw, 2rem);
-    border-style: ridge;
-    border-color: #1e2124;
+    border-radius: 10px;
+    border-color: white;
 }
 #menuitems {
     font-size: clamp(1rem, 2vw, 2rem);
-    margin: auto;
+    margin: top;
 }
 
 #button {
@@ -138,7 +169,7 @@ body {
     border-style: outset;
     border-color: #1e2124;
     font-size: clamp(1rem, 2vw, 2rem);
-    font: bold15px arial,sans-serif;
+    font: bold15px arial,sans-serif; 
     text-shadow: none;
     text-align: center;
     text-decoration: none;
@@ -155,3 +186,4 @@ body {
     border-radius: 50%;
     display: inline-block;
   }
+  

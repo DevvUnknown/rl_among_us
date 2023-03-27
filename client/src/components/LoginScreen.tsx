@@ -52,7 +52,7 @@ class LoginScreen extends Component<IProps, IConnectionInfo> {
                     <button id="button" type='submit'>Submit</button>                    
                 </div>
                 <br />
-                
+               
             </form>
         )
     }

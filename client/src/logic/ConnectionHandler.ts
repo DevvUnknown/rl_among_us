@@ -18,7 +18,7 @@ class ConnectionHandler {
         this._io = socketIOClient(url,
             { transports: ['websocket'], query: `connectionInfo=${JSON.stringify(connectionHeader)}` }
         )
-        if (callback != undefined) {
+        if (callback !== undefined) {
             this.io.on('connect', callback);
         }
     }

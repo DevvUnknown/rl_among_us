@@ -68,10 +68,14 @@ class App extends Component<IProps, IState> {
                 </div>
             )
         } else if (!this.state.isInGame) {
+            if (this.gameManager === undefined) {
+                alert("App is connected without a game manager. This should not be able to happen.")
+                return <div className="app"></div>;
+            }
             // Lobby screen
             return (
                 <div className="app">
-                    <WaitingRoom />
+                <WaitingRoom/>
                 </div>
             )
         } else {
